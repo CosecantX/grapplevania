@@ -76,4 +76,4 @@ func _physics_process(delta):
 #	var dist = global_position.distance_to(hook.global_position)
 	if climbing:
 		print(hook.global_position.clamped(climb_dist))
-		global_position = hook.position + hook.position.clamped(climb_dist)
+		global_position = hook.global_position.clamped(climb_dist)
