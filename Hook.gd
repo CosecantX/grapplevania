@@ -1,5 +1,8 @@
 extends KinematicBody2D
 
+signal hook_locked
+signal hook_unlocked
+
 const SHOT_FORCE = 20
 const GRAVITY = 50
 
@@ -15,9 +18,10 @@ func _physics_process(delta):
 			velocity.y += GRAVITY * delta
 			rotation = velocity.angle()
 		var collision = move_and_collide(velocity)
-		if collision:
+		if collision and not hooked:
 			velocity = Vector2.ZERO
 			hooked = true
+			emit_signal("hook_locked")
 	else:
 		hooked = false
 
@@ -30,5 +34,6 @@ func shoot(angle):
 
 func retract():
 	hooked = false
+	emit_signal("hook_unlocked")
 	set_visible(false)
 	
