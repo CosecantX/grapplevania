@@ -56,6 +56,14 @@ move_down={
  ]
 }
 
+[layer_names]
+
+2d_render/layer_1="Player"
+2d_render/layer_2="Hook"
+2d_render/layer_3="Terrain"
+2d_render/layer_4="Enemies"
+
 [rendering]
 
+quality/driver/driver_name="GLES2"
 environment/default_environment="res://default_env.tres"

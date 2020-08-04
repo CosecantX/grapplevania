@@ -33,7 +33,8 @@ func shoot(angle):
 	
 
 func retract():
+	if hooked:
+		emit_signal("hook_unlocked")
 	hooked = false
-	emit_signal("hook_unlocked")
 	set_visible(false)
 	

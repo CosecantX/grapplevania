@@ -9,6 +9,7 @@ export var jump_force = 250
 export var gravity = 500
 export var climb_speed = 5
 export var max_rope_length = 220
+export var max_health = 10
 
 onready var hook = Global.get_hook()
 onready var ceiling_detector = $CeilingDetector
@@ -19,6 +20,7 @@ var velocity = Vector2()
 var hook_out = false
 var hooked = false
 var rope_length = 0
+var current_health = max_health
 
 func _enter_tree():
 	Global.set_player(self)
