@@ -71,6 +71,8 @@ shoot_gun={
 2d_physics/layer_3="Terrain"
 2d_render/layer_4="Enemies"
 2d_physics/layer_4="Player Bullets"
+2d_physics/layer_5="Enemies"
+2d_physics/layer_6="Enemy Bullets"
 
 [rendering]
 

@@ -1,8 +1,11 @@
 extends KinematicBody2D
 
+var bullet_node = preload("res://Bullet.tscn")
+
 onready var reticle = $Reticle
 onready var raycast = $RayCast2D
 onready var raycast2 = $RayCast2D2
+onready var gun_timer = $GunTimer
 
 export var player_width = 16
 export var walk_force = 1000
@@ -93,6 +96,9 @@ func _physics_process(delta):
 	
 	if Input.is_action_pressed("move_down"):
 		rope_lengthen()
+	
+	if Input.is_action_pressed("shoot_gun") and gun_timer.is_stopped():
+		shoot_gun()
 
 func _draw():
 	# Draw circle to signify rope length
@@ -124,6 +130,13 @@ func check_for_collision_on_rope_shortening():
 	raycast.set_cast_to(Vector2.RIGHT.rotated(angle) * (climb_speed + player_width))
 	raycast2.set_cast_to(Vector2.RIGHT.rotated(angle) * (climb_speed + player_width))
 	return raycast.is_colliding() or raycast2.is_colliding()
+
+func shoot_gun():
+	var bullet = bullet_node.instance()
+	add_child(bullet)
+	bullet.global_position = global_position
+	bullet.shoot(reticle.rotation)
+	gun_timer.start()
 
 func _on_hook_locked():
 	hooked = true
