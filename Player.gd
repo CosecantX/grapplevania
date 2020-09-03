@@ -6,6 +6,10 @@ onready var reticle = $Reticle
 onready var raycast = $RayCast2D
 onready var raycast2 = $RayCast2D2
 onready var gun_timer = $GunTimer
+onready var damage_timer = $DamageTimer
+
+signal set_max_hp(hp)
+signal set_hp(hp)
 
 export var player_width = 16
 export var walk_force = 1000
@@ -53,7 +57,7 @@ func _physics_process(delta):
 		var fall_speed = get_slide_collision(i).remainder
 		if fall_speed.y > fall_damage_threshold:
 			var fall_damage = ceil(fall_speed.y - fall_damage_threshold)
-			print(fall_damage)
+			damage(fall_damage)
 	
 	# Constrain player's position if beyond rope length
 	if hooked:
@@ -141,6 +145,14 @@ func shoot_gun():
 	bullet.shoot(reticle.rotation)
 	gun_timer.start()
 
+func damage(dmg):
+	if damage_timer.is_stopped():
+		current_health -= dmg
+		if current_health < 0:
+			current_health = 0
+		emit_signal("set_hp", current_health)
+		damage_timer.start()
+
 func _on_hook_locked():
 	hooked = true
 	# Set rope length to distance between player and hook
@@ -154,4 +166,3 @@ func _on_hook_unlocked():
 	velocity.y = 0
 	if not is_on_floor():
 		velocity.x /= 2 # ?
-
